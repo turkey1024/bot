@@ -5,8 +5,6 @@ on:
   schedule:
     # 每6小时运行一次（UTC时间）
     - cron: '0 */6 * * *'
-    # 或者设置多个时间点覆盖更多时段
-    - cron: '0 0,6,12,18 * * *'
 
 jobs:
   selenium-bot:
@@ -58,13 +56,3 @@ jobs:
         PLAYOK_PASSWORD: ${{ secrets.PLAYOK_PASSWORD }}
       run: |
         python playok_selenium_bot.py
-        
-    - name: Upload debug screenshots
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: selenium-screenshots
-        path: |
-          *.png
-        retention-days: 1
-
