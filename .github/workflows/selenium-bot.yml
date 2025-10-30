@@ -55,4 +55,4 @@ jobs:
         PLAYOK_USERNAME: ${{ secrets.PLAYOK_USERNAME }}
         PLAYOK_PASSWORD: ${{ secrets.PLAYOK_PASSWORD }}
       run: |
-        python playok_selenium_bot.py
+        python bot.py
