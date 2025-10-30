@@ -1,9 +1,8 @@
 name: PlayOK Selenium Bot
 
 on:
-  workflow_dispatch:  # 手动触发
+  workflow_dispatch:
   schedule:
-    # 每6小时运行一次（UTC时间）
     - cron: '0 */6 * * *'
 
 jobs:
@@ -19,36 +18,17 @@ jobs:
       with:
         python-version: '3.10'
         
-    - name: Install system dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y wget unzip
-        
     - name: Install Chrome
       run: |
+        sudo apt-get update
         sudo apt-get install -y google-chrome-stable
         echo "Chrome version:"
         google-chrome --version
         
-    - name: Install ChromeDriver
-      run: |
-        # 获取Chrome版本
-        CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+' | cut -d'.' -f1-3)
-        echo "Chrome version: $CHROME_VERSION"
-        
-        # 下载对应版本的ChromeDriver
-        CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
-        wget -q "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
-        unzip chromedriver_linux64.zip
-        sudo mv chromedriver /usr/local/bin/
-        sudo chmod +x /usr/local/bin/chromedriver
-        echo "ChromeDriver version:"
-        chromedriver --version
-        
     - name: Install Python packages
       run: |
         python -m pip install --upgrade pip
-        pip install selenium beautifulsoup4 requests
+        pip install selenium beautifulsoup4 requests webdriver-manager
         
     - name: Run Selenium Bot
       env:
